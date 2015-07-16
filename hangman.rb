@@ -23,7 +23,7 @@
 =end
 
 require 'sinatra'
-require 'sinatra/reloader'
+#require 'sinatra/reloader'
 
 #-----------------------------------------------------------
 #returns the counter to add to the no of tries based on if
