@@ -19,42 +19,49 @@
 		</form>
 
 		<p>
-			<font color="red"><%= message %></font>
+			<b><font color="red"><%= message %></font></b>
 		</p>
 
 	<% end %>
 
 	<% if !is_get_level %>
 		<form>
-		<p>Word: <%= guessed_word.join(" ") %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspTries left: </b><%= current_try %> </p>
-  		Choose a letter:
-  			
+		<p>
+			<font size="6">Word:</font>
+			<%guessed_word.each do |item| %>
+				<font size="6"><mark><b><%= item %></b></mark></font>
+			<% end %>
+		    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<b>Tries left:<%= current_try %></b>
+        </p>
+  		<BR>&nbsp;<BR>
+  		<b>Click on a letter to choose:</b>
+  		<p></p>	
   		<% available_letters.each do |item| %>
  	 	
 			<% if item == "*" %>
-				</b><font color="red"><%=item%></font>
+				<b><font color="red"><%=item%></font></b>
  			<% else %>
  			    <% if !is_eof_game %>
-  					<input type="submit" name=letter value=<%= item %>>
+  					<b><input type="submit" name=letter value=<%= item %>></b>
   				<% else %>
-  					<input type="submit" name=letter value=<%= item %> disabled>
+  					<b><input type="submit" name=letter value=<%= item %> disabled></b>
   				<% end %>	
   			<% end %>
   			
   		<% end %>
-  		<p></p>
-  		Missed letters :
+  		<BR>&nbsp;<BR>	
+  		<b>Missed letters :</b>
 		<% missed_letters.each do |item| %>
-  			<input type="submit" value=<%= item %> disabled>
+  			<mark><input type="submit" value=<%= item %> disabled></mark>
   		<% end %>
-  			
         </form>
         <form>
      	<p></p>
+     	<BR>&nbsp;<BR>
   		</b><font color="red"><%= message %></font>
   		<p></p>
   			<input type="submit" name=game value='Restart'>
-  			<input type="submit" name=game value='Back'>	
+  			<input type="submit" name=game value='Back'>
   		<p></p>
     	</form>
 	<% end %>
