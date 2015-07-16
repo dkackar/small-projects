@@ -149,32 +149,30 @@ last_level = ""
 
 get '/' do
 
-  	level = params["level"]
-  	letter = params["letter"]
-    game = params["game"]
+	level = params["level"]
+ 	letter = params["letter"]
+ 	game = params["game"]
 
   	if $is_get_level
-  		puts "XXXXXXXXXX Getting level"
-  		message = check_level(level)
+ 		message = check_level(level)
   	end 
   		
 	if level.to_i > 1
-		puts "XXXXXXXXXX Getting new word"
-        last_level = level
+		last_level = level
 		message = get_new_word(level)
   	end
 
-  	return_value = get_letter(letter,$available_letters)
+	return_value = get_letter(letter,$available_letters)
 
-  	letter_msg =  return_value[1]
-  	letter_valid = return_value[0]
+	letter_msg =  return_value[1]
+	letter_valid = return_value[0]
     
-    if letter_valid
-    	num = check_guessed_letter($word,letter,$available_letters)
+	if letter_valid
+		num = check_guessed_letter($word,letter,$available_letters)
     	current_try += num
     
     	if (ind = $available_letters.index(letter)) != nil
-    		$available_letters[ind] =  "*"
+			$available_letters[ind] =  "*"
     	end
     
     	ind_array = (0..$word.size - 1).select {|i| $word[i] == letter}
