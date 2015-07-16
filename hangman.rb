@@ -70,7 +70,7 @@ def array_sort(level)
 	end	
 
 	sorted_arr = arr.sort {|x,y| x.length <=> y.length}
-    sorted_arr_lengths = Hash.new()
+        sorted_arr_lengths = Hash.new()
 
 	start = 0
 
@@ -117,7 +117,7 @@ end
 def initialize_globals(game)
 
 	$available_letters = "abcdefghijklmnopqrstuvwxyz".split("")
-    $missed_letters = []
+        $missed_letters = []
 
 	if game.downcase == "back" 
 		$is_get_level = true
@@ -168,39 +168,39 @@ get '/' do
 	letter_valid = return_value[0]
     
 	if letter_valid
-		num = check_guessed_letter($word,letter,$available_letters)
-    	current_try += num
+           num = check_guessed_letter($word,letter,$available_letters)
+           current_try += num
     
-    	if (ind = $available_letters.index(letter)) != nil
-			$available_letters[ind] =  "*"
-    	end
+    	   if (ind = $available_letters.index(letter)) != nil
+		     $available_letters[ind] =  "*"
+     	   end
     
-    	ind_array = (0..$word.size - 1).select {|i| $word[i] == letter}
-    	ind_array.each {|i| $guessed_word[i] = letter}	
+           ind_array = (0..$word.size - 1).select {|i| $word[i] == letter}
+           ind_array.each {|i| $guessed_word[i] = letter}	
     end
  
     if current_try == 0
-   		curent_try = MAX_TRIES
-   		$is_eof_game = true
-   		message = "YOU ARE SO DEAD! HOW HARD WAS IT TO GUESS\
-   		           THE WORD #{$word.join("")} ?"
-   	elsif $guessed_word.include?("_") == false
-   		$is_eof_game = true
-   		message = "AWESOME! YOU HAVE YOUR LIFE BACK!" 
-   	end	
+  	curent_try = MAX_TRIES
+   	$is_eof_game = true
+   	message = "YOU ARE SO DEAD! HOW HARD WAS IT TO GUESS\
+   	           THE WORD #{$word.join("")} ?"
+    elsif $guessed_word.include?("_") == false
+   	$is_eof_game = true
+   	message = "AWESOME! YOU HAVE YOUR LIFE BACK!" 
+    end	
  	
-   	if game != nil
-   	    if game.downcase == "back" || game.downcase == "restart"
-			initialize_globals(game)
-   		  	current_try = MAX_TRIES
+    if game != nil
+       if game.downcase == "back" || game.downcase == "restart"
+		initialize_globals(game)
+   	  	current_try = MAX_TRIES
      	  	message = ""
      	
      	  	if game.downcase == "restart"
      	  		level = last_level
-			 	message = get_new_word(level)
-		  	end 
-		end  			  
-  	end
+		 	message = get_new_word(level)
+	  	end 
+	end  			  
+    end
 
-  	erb :hm_index, :locals => {:level => level, :message => message, :letter => letter, :available_letters => $available_letters, :is_get_level => $is_get_level, :guessed_word => $guessed_word, :current_try => current_try, :is_eof_game => $is_eof_game, :game => game, :missed_letters => $missed_letters}
+    erb :hm_index, :locals => {:level => level, :message => message, :letter => letter, :available_letters => $available_letters, :is_get_level => $is_get_level, :guessed_word => $guessed_word, :current_try => current_try, :is_eof_game => $is_eof_game, :game => game, :missed_letters => $missed_letters}
 end
