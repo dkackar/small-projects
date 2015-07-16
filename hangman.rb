@@ -6,8 +6,8 @@
   	
   	>> Also create a Hash which lists the start and end index of
   	   words of length x  i.e
-  	   start_level2 => 0 
-  	   end_level2 => 5  
+  	   start_2 => 0 
+  	   end_2 => 5  
   	   The above indicates that 2 letter words start at index 0
   	   and end at index 5
 
@@ -50,8 +50,9 @@ def check_level(level)
 	end
 	return "Difficulty level is #{level}"
 end
+
 #----------------------------------------------------------
-# This proc is not needed 
+# Check letter validity
 #----------------------------------------------------------
 def get_letter(letter,available_letters)
 	if letter == nil || letter.strip.empty? ||\
@@ -210,13 +211,13 @@ get '/' do
     		arr_len = correct_guess_msg_array.length
 			message = correct_guess_msg_array[rand(arr_len)]
 		end	
-    	current_try += num
+    		current_try += num
     
-    	if (ind = $available_letters.index(letter)) != nil
+   	 	if (ind = $available_letters.index(letter)) != nil
 			$available_letters[ind] =  "*"
-    	end
+    		end
     
-    	ind_array = (0..$word.size - 1).select {|i| $word[i] == letter}
+    		ind_array = (0..$word.size - 1).select {|i| $word[i] == letter}
    		ind_array.each {|i| $guessed_word[i] = letter}	
 	end
  
@@ -231,15 +232,15 @@ get '/' do
    	end	
  	
    	if game != nil
-   	    if game.downcase == "back" || game.downcase == "restart"
+		if game.downcase == "back" || game.downcase == "restart"
 			initialize_globals(game)
-   		  	current_try = MAX_TRIES
-     	  	message = check_level("")
+   	  		current_try = MAX_TRIES
+     	  		message = check_level("")
      	
-     	  	if game.downcase == "restart"
-     	  		level = last_level
-			 	message = get_new_word(level)
-		  	end 
+     	  		if game.downcase == "restart"
+     	  			level = last_level
+		 		message = get_new_word(level)
+	  		end 
 		end  			  
   	end
 
