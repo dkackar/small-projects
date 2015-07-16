@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	<title>HANG MAN GAME</title>
+	<meta charset="UTF-8">
+</head>
+
+<body style="text-align:center">
+	<h1 style="color:red">Hang-Man</h1>
+	<img src="hangman6.gif" alt="Hangman" width="100" height="100">
+	<hr>
+
+	<% if is_get_level %>
+		<% puts "Is Get level is true" %>
+		<form>
+  			<input type='text' name='level' size="3"/>
+  			<input type='submit' value='Difficulty Level' />
+		</form>
+
+		<p>
+			<font color="red"><%= message %></font>
+		</p>
+
+	<% end %>
+
+	<% if !is_get_level %>
+		<form>
+		<p>Word: <%= guessed_word.join(" ") %> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspTries left: </b><%= current_try %> </p>
+  		Choose a letter:
+  			
+  		<% available_letters.each do |item| %>
+ 	 	
+			<% if item == "*" %>
+				</b><font color="red"><%=item%></font>
+ 			<% else %>
+ 			    <% if !is_eof_game %>
+  					<input type="submit" name=letter value=<%= item %>>
+  				<% else %>
+  					<input type="submit" name=letter value=<%= item %> disabled>
+  				<% end %>	
+  			<% end %>
+  			
+  		<% end %>
+  		<p></p>
+  		Missed letters :
+        <% missed_letters.each do |item| %>
+  			<input type="submit" value=<%= item %> disabled>
+  		<% end %>
+  			
+        </form>
+        <form>
+     	<p></p>
+  		</b><font color="red"><%= message %></font>
+  		<p></p>
+  			<input type="submit" name=game value='Restart'>
+  			<input type="submit" name=game value='Back'>	
+  		<p></p>
+    	</form>
+	<% end %>
+</body>
+</html>
