@@ -23,7 +23,7 @@
 =end
 
 require 'sinatra'
-#require 'sinatra/reloader'
+require 'sinatra/reloader'
 
 #-----------------------------------------------------------
 #returns the counter to add to the no of tries based on if
@@ -166,6 +166,20 @@ $is_eof_game = false
 #----------------------------------------------------------
 last_level = ""   
 
+incorrect_guess_msg_array =\
+ ["HMMMM..... THINK HARD, YOU DON'T HAVE 9 LIVES!",
+  "OH OH... FAILURE IS NOT AN OPTION!",
+  "TOO BAD.... I THOUGHT YOU WERE GOOD!",
+  "DON'T LOOSE HOPE! YOU CAN DO THIS...",
+  "IF AT FIRST YOU DON'T SUCCEED, TRY, TRY AGAIN!"]
+
+correct_guess_msg_array =\
+ ["WOWEEEE....GENUIS!",
+  "YoU RE ON A ROLL!",
+  "GO! GO! GO!, YoU CAN DO THIS!",
+  "THE MASTER SAYS You CAN CHEAT DEATH!",
+  "OMG! ARE YoU PSYCHIC?!!"]
+
 get '/' do
 
 	level = params["level"]
@@ -188,14 +202,22 @@ get '/' do
     
 	if letter_valid
 		num = check_guessed_letter($word,letter,$available_letters)
-    		current_try += num
+	
+		if num < 0
+			arr_len = incorrect_guess_msg_array.length
+			message = incorrect_guess_msg_array[rand(arr_len)]
+		else    
+    		arr_len = correct_guess_msg_array.length
+			message = correct_guess_msg_array[rand(arr_len)]
+		end	
+    	current_try += num
     
-    		if (ind = $available_letters.index(letter)) != nil
+    	if (ind = $available_letters.index(letter)) != nil
 			$available_letters[ind] =  "*"
-    		end
+    	end
     
-    		ind_array = (0..$word.size - 1).select {|i| $word[i] == letter}
-    		ind_array.each {|i| $guessed_word[i] = letter}	
+    	ind_array = (0..$word.size - 1).select {|i| $word[i] == letter}
+   		ind_array.each {|i| $guessed_word[i] = letter}	
 	end
  
 	if current_try == 0
@@ -210,13 +232,13 @@ get '/' do
  	
    	if game != nil
    	    if game.downcase == "back" || game.downcase == "restart"
-		initialize_globals(game)
-   	  	current_try = MAX_TRIES
-     	  	message = ""
+			initialize_globals(game)
+   		  	current_try = MAX_TRIES
+     	  	message = check_level("")
      	
      	  	if game.downcase == "restart"
      	  		level = last_level
-		 	message = get_new_word(level)
+			 	message = get_new_word(level)
 		  	end 
 		end  			  
   	end

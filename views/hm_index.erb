@@ -8,7 +8,9 @@
 
 <body style="text-align:center">
 	<h1 style="color:red">Hang-Man</h1>
-	<img src="hangman6.gif" alt="Hangman" width="100" height="100">
+		<% if is_get_level %>
+			<img src="http://i1185.photobucket.com/albums/z344/kittycatskie/doodles/Hangman.png" alt="Hangman" style="width:250px;height:200px;">
+		<% end %>	
 	<hr>
 
 	<% if is_get_level %>
@@ -27,7 +29,7 @@
 	<% if !is_get_level %>
 		<form>
 		<p>
-			<font size="6">Word:</font>
+			<img src="http://i1185.photobucket.com/albums/z344/kittycatskie/doodles/Hangman.png" alt="Hangman" style="width:200px;height:175px;">
 			<%guessed_word.each do |item| %>
 				<font size="6"><mark><b><%= item %></b></mark></font>
 			<% end %>
